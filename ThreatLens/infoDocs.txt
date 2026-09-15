@@ -1,0 +1,18 @@
+Open Terminal and Change the location to 
+\SecurityModel-CICIDS2017\ml-service
+(Just Change the path for other model rest is same this is better model with more data)
+
+Create and Activate venv using :
+python -m venv venv
+
+venv\Scripts\activate
+
+
+Install Dependencies:
+python -m pip install --upgrade pip
+
+pip install -r requirements.txt
+
+
+To run the application:
+uvicorn app:app --reload

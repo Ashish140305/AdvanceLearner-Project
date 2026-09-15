@@ -1,0 +1,5 @@
+Model,Dataset,Threshold,Accuracy,Precision,Recall,F1
+Random Forest,Unseen Days,0.01,0.8851,0.8033,0.8527,0.8273
+Random Forest,Unseen Days,0.3,0.7985,0.9882,0.38,0.549
+Isolation Forest,Unseen Days,0.1,0.6126,0.4476,0.8571,0.5881
+RF + IF Candidate OR Rule,Unseen Days,RF>=0.01 OR IF>=0.10 when RF<0.01,0.6439,0.4753,0.9995,0.6443
