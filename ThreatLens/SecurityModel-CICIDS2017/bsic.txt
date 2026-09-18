@@ -1,0 +1,79 @@
+Here is the step-by-step guide to run both modes.
+
+---
+
+### Step 1: Start the ML Inference Engine (Required for both modes)
+
+Open **Terminal 1** and start the FastAPI service:
+```powershell
+cd ml-service
+python -m uvicorn app:app --host 127.0.0.1 --port 8000 --reload
+```
+> Keep this terminal running in the background.
+
+*(Optional)* You can open **`http://127.0.0.1:8000/`** in your browser to watch the live visual SOC dashboard.
+
+---
+
+### Option A: How to Run in DATASET Mode *(Recommended for Demo)*
+
+This mode reads real traffic and real DDoS attacks directly from `Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv` and streams them through the ML model in real time.
+
+Open **Terminal 2** (in the project root):
+```powershell
+python Daemon_controller/network_daemon.py
+```
+
+#### What you will see:
+1. **Benign Traffic Phase**:
+   ```
+   [*] [OK] Batch #001 (30 flows) | Threats: 0 | Phase: BENIGN (Normal LAN Traffic)
+   [*] [OK] Batch #002 (30 flows) | Threats: 0 | Phase: BENIGN (Normal LAN Traffic)
+   ```
+2. **DDoS Attack Surge Phase** (as soon as attack traffic hits):
+   ```
+   [!] CRITICAL BREACH DETECTED: Batch #3 (30 flows) | 22 MALICIOUS INTRUSIONS CAUGHT:
+       -> [CRITICAL] 205.174.165.73:50039 -> 192.168.10.50:80 | RF Score: 0.8750 | IF Anomaly: VERY_HIGH
+       -> [CRITICAL] 205.174.165.73:50039 -> 192.168.10.50:80 | RF Score: 0.7625 | IF Anomaly: HIGH
+   ```
+
+*(For a quick 5-second accuracy table on the dataset, you can also run: `python run_dataset_detection.py`)*
+
+---
+
+### Option B: How to Run in LIVE WI-FI Mode
+
+This mode binds directly to your laptop’s physical Wi-Fi network card and sniffs live packets flying in and out of your computer in real time.
+
+Open **Terminal 2** (run PowerShell as Administrator if needed):
+```powershell
+python Daemon_controller/network_daemon.py --live
+```
+
+#### What you will see:
+1. **Auto-Discovery & Interface Binding**:
+   ```
+   [+] Dynamically selected adapter: Wi-Fi (10.238.227.224)
+   [+] Whitelisted Host MAC: 50:5a:65:b8:cc:4d
+   [+] Monitoring Local LAN Subnet: 10.238.227.0/24
+   [+] Whitelisted Default Gateway: 10.238.227.44 (06:58:71:7a:95:1f)
+   [*] Sniffing live packets (IP + ARP)...
+   ```
+2. **Normal Live Browsing**:
+   Every second, the daemon updates the terminal so you know it is actively working:
+   ```
+   [*] Batch #15: 42 flows evaluated -> 0 threats (Traffic normal)
+   ```
+3. **If Malicious Traffic or a Rogue Device Appears**:
+   The terminal immediately flags the alert in red:
+   ```
+   [!] CRITICAL: 1 MALICIOUS FLOW(S) DETECTED IN BATCH #16:
+       -> [CRITICAL] 192.168.1.50:55555 -> 10.238.227.224:80 (TCP) | RF: 0.7500 | IF Anomaly: HIGH
+   ```
+
+#### How to test that Live Wi-Fi Mode catches attacks:
+While Live Wi-Fi mode is running, open **Terminal 3** and inject an attack burst:
+```powershell
+python simulate_attack.py --count 10
+```
+You will immediately see the attack alerts appear on your ML service and your web dashboard!
