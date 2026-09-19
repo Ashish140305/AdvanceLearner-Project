@@ -1,0 +1,17 @@
+[31mBuild failed with 1 error:
+
+[31m[UNRESOLVED_IMPORT] [0mCould not resolve './Card' in src/components/dashboard/StatCard.jsx
+   [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m src/components/dashboard/StatCard.jsx:1:22 [38;5;246m][0m
+   [38;5;246m│[0m
+ [38;5;246m1 │[0m [38;5;249mi[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249m{[0m[38;5;249m [0m[38;5;249mC[0m[38;5;249ma[0m[38;5;249mr[0m[38;5;249md[0m[38;5;249m [0m[38;5;249m}[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m [0m"./Card"[38;5;249m;[0m
+ [38;5;240m  │[0m                      ────┬───  
+ [38;5;240m  │[0m                          ╰───── Module not found.
+ [38;5;240m  │[0m 
+ [38;5;240m  │[0m [38;5;115mHelp[0m: 'src/components/dashboard/StatCard.jsx' is imported by the following path:
+ [38;5;240m  │[0m         - src/components/dashboard/StatCard.jsx
+ [38;5;240m  │[0m         - src/pages/Dashboard.jsx
+ [38;5;240m  │[0m         - src/App.jsx
+ [38;5;240m  │[0m         - src/main.jsx
+ [38;5;240m  │[0m         - index.html
+[38;5;246m───╯[0m
+[39m
